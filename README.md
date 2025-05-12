@@ -896,6 +896,196 @@ myState.state = ["ntm", 83, true]; // ✅
 
 ---
 
+## 📘 Utility Types
+
+### 1. `Partial<Type>`
+
+Makes all properties in `Type` optional.
+
+```ts
+interface Assignment {
+  studentId: string;
+  title: string;
+  grade: number;
+  verified?: boolean;
+}
+
+const updateAssignment = (
+  assign: Assignment,
+  propsToUpdate: Partial<Assignment>
+): Assignment => {
+  return { ...assign, ...propsToUpdate };
+};
+
+const assign1: Assignment = {
+  studentId: "ntm",
+  title: "Computer Graphics",
+  grade: 90,
+};
+
+console.log(updateAssignment(assign1, { grade: 100 }));
+const assignGraded: Assignment = updateAssignment(assign1, { grade: 100 });
+```
+
+---
+
+### 2. `Required<Type>` and `Readonly<Type>`
+
+* `Required<Type>`: Makes all properties required.
+* `Readonly<Type>`: Makes all properties immutable.
+
+```ts
+const recordAssignment = (assign: Required<Assignment>): Assignment => {
+  return assign;
+};
+
+const assignVerified: Readonly<Assignment> = { ...assignGraded, verified: true };
+// assignVerified.grade = 90; // ❌ Error: Readonly
+
+recordAssignment({ ...assign1, verified: true });
+```
+
+---
+
+### 3. `Record<Keys, Type>`
+
+Constructs an object type with keys of type `Keys` and values of type `Type`.
+
+```ts
+const hexColorMap: Record<string, string> = {
+  red: "FF0000",
+  green: "00FF00",
+  blue: "0000FF",
+};
+
+type studentName = "azraf" | "sami";
+type LetterGrades = "A" | "B" | "C" | "D" | "U";
+
+const finalGrades: Record<studentName, LetterGrades> = {
+  azraf: "A",
+  sami: "B",
+};
+
+interface Grades {
+  assign1: number;
+  assign2: number;
+}
+
+const gradeData: Record<studentName, Grades> = {
+  azraf: { assign1: 90, assign2: 93 },
+  sami: { assign1: 85, assign2: 98 },
+};
+```
+
+---
+
+### 4. `Pick<Type, Keys>` and `Omit<Type, Keys>`
+
+* `Pick` creates a type by picking specific keys.
+* `Omit` creates a type by omitting specific keys.
+
+```ts
+type AssignmentResult = Pick<Assignment, "studentId" | "grade">;
+const score: AssignmentResult = {
+  studentId: "ntm",
+  grade: 100,
+};
+
+type AssignmentPreview = Omit<Assignment, "grade" | "verified">;
+const preview: AssignmentPreview = {
+  studentId: "ntm",
+  title: "Test Project",
+};
+```
+
+---
+
+### 5. `Exclude<Type, ExcludedUnion>` and `Extract<Type, Union>`
+
+* `Exclude`: Excludes types from a union.
+* `Extract`: Extracts matching types from a union.
+
+```ts
+type adjustGrades = Exclude<LetterGrades, "U">; // "A" | "B" | "C" | "D"
+type highGrades = Extract<LetterGrades, "A" | "B">; // "A" | "B"
+```
+
+---
+
+### 6. `NonNullable<Type>`
+
+Removes `null` and `undefined` from a type.
+
+```ts
+type AllPossibleGrades = "ntm" | "sas" | null | undefined;
+type NamesOnly = NonNullable<AllPossibleGrades>; // "ntm" | "sas"
+```
+
+---
+
+### 7. `ReturnType<Type>`
+
+Extracts the return type of a function.
+
+```ts
+type newAssign = { title: string; point: number };
+const createNewAssign = (title: string, point: number): newAssign => {
+  return { title, point };
+};
+
+type newAssign2 = ReturnType<typeof createNewAssign>;
+const tAssign: newAssign2 = createNewAssign("Utility Types", 100);
+console.log(tAssign);
+```
+
+---
+
+### 8. `Parameters<Type>`
+
+Extracts the parameter types of a function as a tuple.
+
+```ts
+type AssignParams = Parameters<typeof createNewAssign>;
+const assignArgs: AssignParams = ["Image Processing Project", 100];
+const tAssign2: newAssign = createNewAssign(...assignArgs);
+console.log(tAssign2);
+```
+
+---
+
+### 9. `Awaited<Type>`
+
+Helps retrieve the resolved type inside a `Promise`.
+
+```ts
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+}
+
+const fetchUsers = async (): Promise<User[]> => {
+  const data = await fetch('https://jsonplaceholder.typicode.com/users')
+    .then((res) => res.json())
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.log(err.message);
+      }
+    });
+
+  return data;
+};
+
+// Awaited extracts User[] from Promise<User[]>
+type FetchUsersReturnType = Awaited<ReturnType<typeof fetchUsers>>;
+fetchUsers().then((users) => console.log(users));
+```
+
+---
+
+
+
 
 
 
