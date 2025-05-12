@@ -10,7 +10,7 @@
 
 ---
 
-## 📘 [Basic Concepts & Types](#basic-concepts--types)
+## [Basic Concepts & Types](#basic-concepts--types)
 
 ### ✅ 1. Variable Declaration with Type Inference
 
@@ -189,7 +189,7 @@ Great work! Here's the next part of your **TypeScript Notes**, now covering **Ty
 
 ---
 
-## 📘 Object
+## [Object](#object)
 
 
 ### 🔹 Arrays Are Objects
@@ -359,7 +359,7 @@ console.log(Grade.B); // 84
 ---
 
 
-## 📘 Advanced Types & Functions
+## [Advanced Types & Functions](#advanced-types--functions)
 
 ### 📌 1. Type Aliases
 
@@ -557,7 +557,7 @@ const numberOrStringFunc2 = (value: number | string): string => {
 
 ---
 
-## 📘 Type Assertions, Unknown, and DOM Handling
+## [Type Assertions, Unknown, and DOM Handling](#type-assertions-unknown-and-dom-handling)
 
 ### 🧾 1. Type Assertions (a.k.a. Type Casting)
 
@@ -678,7 +678,7 @@ This is an excellent and thorough overview of **advanced TypeScript concepts**, 
 
 ---
 
-## 📘 OOP, Interfaces, Index Signatures, and Records
+## [OOP, Interfaces, Index Signatures, and Records](#oop-interfaces-index-signatures-and-records)
 
 
 ### 1️⃣ **Classes with Access Modifiers**
@@ -898,7 +898,7 @@ type Income = Record<'salary' | 'bonus' | 'sideHustle', number>;
 
 ---
 
-## 📘 Generics
+## [Generics](#generics)
 
 ### 1. Basic Function with and without Generics
 
@@ -1074,7 +1074,7 @@ myState.state = ["ntm", 83, true]; // ✅
 
 ---
 
-## 📘 Utility Types
+## [Utility Types](#utility-types)
 
 ### 1. `Partial<Type>`
 
