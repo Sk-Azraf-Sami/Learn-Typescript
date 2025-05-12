@@ -181,6 +181,176 @@ Great work! Here's the next part of your **TypeScript Notes**, now covering **Ty
 
 ---
 
+## 📘 Object
+
+
+### 🔹 Arrays Are Objects
+
+```ts
+let myObj: object; 
+myObj = []; // Valid: arrays are a type of object
+myObj = {}; // Valid: plain object
+console.log(typeof myObj); // 'object'
+```
+
+#### 💡 Explanation:
+
+* In TypeScript (and JavaScript), arrays are technically objects.
+* You can assign both arrays and plain objects to a variable of type `object`.
+
+---
+
+### 🔹 Working with Object Types
+
+#### Defining and Using Object Type
+
+```ts
+type Guitarist = {
+  name: string;
+  active: boolean;
+  album: (string | number)[];
+};
+
+let evh: Guitarist = {
+  name: 'Test',
+  active: false,
+  album: ['ntm', 115]
+};
+
+let jp: Guitarist = {
+  name: 'Test',
+  active: false,
+  album: ['ntm', 'sas', 115, 83]
+};
+
+evh = jp; // Valid assignment
+```
+
+#### 💡 Explanation:
+
+* `type` lets you define custom object types.
+* Here, `album` accepts an array of `string | number`.
+
+---
+
+### 🔹 Optional Object Properties
+
+```ts
+type GuitaristOpt = {
+  name: string;
+  active?: boolean; // Optional property
+  album: (string | number)[];
+};
+
+let evhOpt: GuitaristOpt = {
+  name: 'Test',
+  active: false,
+  album: ['ntm', 115]
+};
+
+let jpOpt: GuitaristOpt = {
+  name: 'Test',
+  album: ['ntm', 'sas', 115, 83]
+};
+
+evhOpt = jpOpt; // Valid: 'active' is optional
+```
+
+#### 💡 Explanation:
+
+* Optional properties (using `?`) allow you to omit them when creating objects.
+
+---
+
+### 🔹 Using Object Types in Functions
+
+```ts
+const greetGuitarist = (guitarist: Guitarist) => {
+  return `Hello ${guitarist.name}!`;
+};
+```
+
+#### 💡 Explanation:
+
+* You can pass a custom object type into a function parameter.
+* TypeScript ensures the object matches the type structure.
+
+---
+
+### 🔹 Type vs Interface
+
+```ts
+type GuitaristTest = {
+  name: string;
+  active?: boolean;
+  album: (string | number)[];
+};
+
+interface GuitaristTest2 {
+  name: string;
+  active?: boolean;
+  album: (string | number)[];
+}
+```
+
+#### 💡 Explanation:
+
+* `type` and `interface` are mostly interchangeable for object shapes.
+* Interfaces are preferred in large-scale OOP or when extending.
+
+---
+
+### 🔹 Optional Chaining in Functions
+
+```ts
+interface Student {
+  name?: string;
+  roll: number;
+}
+
+const stu1: Student = { name: 'ntm', roll: 83 };
+const stu2: Student = { roll: 115 };
+
+const greetStudent = (student: Student) => {
+  return `Hello ${student.name?.toUpperCase()}`;
+  // Or with narrowing:
+  // if (student.name) {
+  //   return `Hello ${student.name.toUpperCase()}`;
+  // }
+  // return `Hello`;
+};
+
+console.log(greetStudent(stu1)); // Hello NTM
+console.log(greetStudent(stu2)); // Hello undefined
+```
+
+#### 💡 Explanation:
+
+* Use optional chaining (`?.`) to safely access potentially undefined properties.
+* Alternative: use conditional checks (narrowing).
+
+---
+
+### 🔹 Enums in TypeScript
+
+```ts
+enum Grade {
+  A = 83,
+  B, // 84
+  C  // 85
+}
+
+console.log(Grade.B); // 84
+```
+
+#### 💡 Explanation:
+
+* Enums allow for named constants.
+* If one member is initialized (`A = 83`), others increment by 1 automatically unless explicitly set.
+
+---
+
+
 ## 📘 Advanced Types & Functions
 
 ### 📌 1. Type Aliases
