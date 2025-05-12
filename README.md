@@ -720,6 +720,182 @@ type Income = Record<'salary' | 'bonus' | 'sideHustle', number>;
 
 ---
 
+## 📘 Generics
+
+### 1. Basic Function with and without Generics
+
+```ts
+const stringEcho = (arg: string): string => arg;
+```
+
+This function returns the same string that is passed to it. But it's limited to `string` type.
+
+#### Using Generics
+
+```ts
+const Echo = <T>(arg: T): T => arg;
+```
+
+This version is more flexible. It accepts any type and returns the same type. The type `T` is inferred based on the argument.
+
+---
+
+### 2. Type Guard for Object Type
+
+```ts
+const isObj = <T>(arg: T): boolean => {
+    return (typeof arg === 'object' && !Array.isArray(arg) && arg !== null);
+}
+```
+
+* Checks if a value is a non-null, non-array object.
+* Useful for filtering out arrays and null which are also of type `object` in JavaScript.
+
+#### Example Usage
+
+```ts
+console.log(isObj(true)); // false
+console.log(isObj(null)); // false
+console.log(isObj([1, 2, 3])); // false
+console.log(isObj('ntm')); // false
+console.log(isObj({ name: 'ntm' })); // true
+```
+
+---
+
+### 3. Truthy Check with Custom Logic
+
+```ts
+const isTrue = <T>(arg: T): { arg: T, is: boolean } => {
+    if (Array.isArray(arg) && !arg.length) return { arg, is: false };
+    if (isObj(arg) && !Object.keys(arg).length) return { arg, is: false };
+    return { arg, is: !!arg };
+}
+```
+
+This function checks whether a value is logically "truthy", with special rules:
+
+* Empty array: false
+* Empty object: false
+* Otherwise: Boolean(arg)
+
+#### Interface Version
+
+```ts
+interface BoolCheck<T> {
+    arg: T,
+    is: boolean
+}
+
+const isTrue2 = <T>(arg: T): BoolCheck<T> => {
+    // same logic as isTrue
+}
+```
+
+#### Example Usage
+
+```ts
+console.log(isTrue(false));     // { arg: false, is: false }
+console.log(isTrue({}));        // { arg: {}, is: false }
+console.log(isTrue([1,2,3]));   // { arg: [1,2,3], is: true }
+```
+
+---
+
+### 4. Constrained Generics with Interface
+
+```ts
+interface HasID {
+    id: number;
+}
+
+const processUser = <T extends HasID>(user: T): T => user;
+```
+
+This function enforces that the passed object must have an `id` property of type `number`.
+
+```ts
+console.log(processUser({ id: 83, name: 'ntm' })); // ✅
+// console.log(processUser({ name: 'sas' })); ❌ Error
+```
+
+---
+
+### 5. Dynamic Property Access from Array of Objects
+
+```ts
+const getUsersProperty = <T extends HasID, K extends keyof T>(users: T[], key: K): T[K][] => {
+    return users.map(user => user[key]);
+}
+```
+
+* `T` is a generic object type that must include an `id`.
+* `K` is a key of `T`, ensuring type safety for property access.
+
+#### Example:
+
+```ts
+const userArray = [
+  { id: 1, name: 'Leanne', username: 'Bret', email: 'a@example.com' },
+  { id: 2, name: 'Ervin', username: 'Antonette', email: 'b@example.com' }
+];
+
+console.log(getUsersProperty(userArray, 'email')); // ['a@example.com', 'b@example.com']
+```
+
+---
+
+### 6. Generic Class with Getter/Setter
+
+```ts
+class stateObj<T> {
+    private data: T;
+
+    constructor(value: T) {
+        this.data = value;
+    }
+
+    get state(): T {
+        return this.data;
+    }
+
+    set state(value: T) {
+        this.data = value;
+    }
+}
+```
+
+* A generic class that stores any type.
+* Maintains type throughout access and updates.
+
+#### Example:
+
+```ts
+const store = new stateObj("ntm");
+store.state = "cse"; // ✅
+// store.state = 83;  // ❌ Type error
+```
+
+#### Solution for Multi-type
+
+```ts
+const myState = new stateObj<(string | number | boolean)[]>([83]);
+myState.state = ["ntm", 83, true]; // ✅
+```
+
+---
+
+### Summary of Concepts Covered
+
+* ✅ Generic Functions
+* ✅ Type Guards (`isObj`)
+* ✅ Logical Evaluation with Extra Rules (`isTrue`)
+* ✅ Interface-based Constraints
+* ✅ `keyof` and Indexed Access Types
+* ✅ Generic Classes with Encapsulation
+
+---
+
 
 
 
