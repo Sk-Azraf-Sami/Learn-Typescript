@@ -1,8 +1,16 @@
 ## Table of Contents 
+- [Basic Concepts & Types](#basic-concepts--types)
+- [Arrays, Tuples, and Type Safety](#arrays-tuples-and-type-safety)
+- [Object](#object)
+- [Advanced Types & Functions](#advanced-types--functions)
+- [Type Assertions, Unknown, and DOM Handling](#type-assertions-unknown-and-dom-handling)
+- [OOP, Interfaces, Index Signatures, and Records](#oop-interfaces-index-signatures-and-records)
+- [Generics](#generics)
+- [Utility Types](#utility-types)
 
 ---
 
-## 📘 Basic Concepts & Types
+## 📘 [Basic Concepts & Types](#basic-concepts--types)
 
 ### ✅ 1. Variable Declaration with Type Inference
 
@@ -1251,14 +1259,3 @@ const fetchUsers = async (): Promise<User[]> => {
 type FetchUsersReturnType = Awaited<ReturnType<typeof fetchUsers>>;
 fetchUsers().then((users) => console.log(users));
 ```
-
----
-
-
-
-
-
-
-
-
-
