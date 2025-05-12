@@ -102,7 +102,7 @@ let re: RegExp = /\w+/g;
 
 ---
 
-## 📘 [Arrays, Tuples, and Type Safety](#arrays-tuples-and-type-safety)
+## Arrays, Tuples, and Type Safety
 
 ### 📚 1. String Array
 
