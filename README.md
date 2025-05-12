@@ -177,6 +177,209 @@ myTuples = arrTest; // ❌ Error (array → tuple)
 
 ---
 
+Great work! Here's the next part of your **TypeScript Notes**, now covering **Type Aliases**, **Function Types**, **Interfaces**, **Optional & Default Parameters**, **Rest Parameters**, and **the `never` Type** — with well-structured explanations.
+
+---
+
+## 📘 Advanced Types & Functions
+
+### 📌 1. Type Aliases
+
+```ts
+type stringOrNumber = string | number;
+type stringOrNumberArray = string | number[];
+```
+
+* **Type aliases** help you create custom names for union types or complex types.
+* Useful for cleaner and more readable code.
+
+---
+
+### 👥 2. Custom Object Types
+
+```ts
+type Member = {
+  ID: stringOrNumber;
+  Name: string;
+  Experience: stringOrNumberArray;
+};
+```
+
+* The `Member` type uses other custom type aliases.
+* Great for defining consistent structure across multiple objects.
+
+---
+
+### 🧱 3. Literal Types
+
+```ts
+let myName = 'sami';
+
+let userName: 'ntm' | 'sas';
+userName = 'ntm'; // ✅ Allowed
+```
+
+* A **literal type** restricts a variable to exactly one or more allowed values.
+* Acts like an enum without extra syntax.
+
+---
+
+### 🔧 4. Functions with Type Annotations
+
+#### Basic Functions
+
+```ts
+const add = (a: number, b: number): number => a + b;
+
+const logMsg = (message: any): void => {
+  console.log(message);
+};
+```
+
+* `:number` specifies return type.
+* `:void` indicates the function **does not return a value**.
+
+---
+
+#### Function Expressions
+
+```ts
+let subtract = function(num1: number, num2: number): number {
+  return num1 - num2;
+};
+```
+
+* Function expressions can also have type annotations.
+
+---
+
+### 🧾 5. Function Type Aliases & Interfaces
+
+```ts
+type mathFunction = (a: number, b: number) => number;
+
+let multiply: mathFunction = (num1, num2) => num1 * num2;
+```
+
+```ts
+interface mathFunction2 {
+  (a: number, b: number): number;
+}
+```
+
+* Define function signatures using `type` or `interface` to enforce structure across function variables.
+
+---
+
+### ❓ 6. Optional & Default Parameters
+
+```ts
+const addAll = (a: number, b: number, c?: number): number => {
+  return c !== undefined ? a + b + c : a + b;
+};
+
+const sumAll = (a: number, b: number, c: number = 2): number => {
+  return a + b + c;
+};
+```
+
+* `c?: number` = **optional parameter** (can be omitted).
+* `c: number = 2` = **default value** (used if not passed).
+
+```ts
+const sumAll2 = (a: number = 10, b: number, c: number = 2) => a + b + c;
+```
+
+* Default values can also be assigned to parameters other than the last, but usage must match carefully.
+
+---
+
+### 📚 7. Rest Parameters
+
+```ts
+const total = (...nums: number[]): number => {
+  return nums.reduce((prev, curr) => prev + curr);
+};
+```
+
+* `...nums: number[]` = accepts any number of arguments into a single array.
+* Perfect for aggregation and iteration.
+
+---
+
+### 🚫 8. The `never` Type
+
+#### Throwing Errors
+
+```ts
+const createError = (errMsg: string): never => {
+  throw new Error(errMsg);
+};
+```
+
+* `never` means the function **never returns** (due to error or infinite loop).
+
+#### Infinite Loops (commented)
+
+```ts
+/* const infinite = () => {
+  let i: number = 1;
+  while (true) {
+    i++;
+  }
+}; */
+```
+
+* This also returns `never` because it never terminates.
+
+#### With Break (returns `void`)
+
+```ts
+const infinite = () => {
+  let i: number = 1;
+  while (true) {
+    i++;
+    if (i >= 100) break;
+  }
+};
+```
+
+---
+
+### ✅ 9. Type Guards
+
+#### Manual Type Checking
+
+```ts
+const numberOrStringFunc = (value: number | string): string => {
+  if (typeof value === 'number') return 'number';
+  if (typeof value === 'string') return 'string';
+  return createError('This should never happen');
+};
+```
+
+* Type guards allow safe narrowing of union types.
+
+#### Reusable Guard Function
+
+```ts
+const isNumber = (value: any): boolean => {
+  return typeof value === 'number';
+};
+
+const numberOrStringFunc2 = (value: number | string): string => {
+  if (isNumber(value)) return 'number';
+  if (typeof value === 'string') return 'string';
+  return createError('This should never happen');
+};
+```
+
+* Improves readability and reusability by abstracting the guard logic.
+
+---
+
+
+
 
 
 
