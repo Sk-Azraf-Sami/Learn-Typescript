@@ -1,0 +1,11 @@
+To start json server: 
+npx json-server -w data/products.json -p 3500
+
+Index:
+http://localhost:3500/
+
+Static files:
+Serving ./public directory if it exists
+
+Endpoints:
+http://localhost:3500/products
