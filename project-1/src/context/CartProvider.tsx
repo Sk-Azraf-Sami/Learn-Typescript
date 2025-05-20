@@ -122,7 +122,7 @@ type ChildrenType = {children?: ReactElement | ReactElement[]}
 
 // {children} : ChildrenType
 // assign type for whole props object  
-export const cartProvider = ({children} : ChildrenType): ReactElement =>{
+export const CartProvider = ({children} : ChildrenType): ReactElement =>{
     return (
         <CartContext.Provider value={useCartContext(initCartState)}>
             {children}
